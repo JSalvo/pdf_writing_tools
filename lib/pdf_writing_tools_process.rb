@@ -1,15 +1,7 @@
 require 'pdf_writing_tools_actions'
 
 module PdfWritingToolsProcess
-  @process_xml_tag_table =
-    {
-      'text' => method(:process_xml_text),
-      'b' => method(:process_xml_tag_b),
-      'i' => method(:process_xml_tag_i),
-      'ul' => method(:process_xml_tag_ul),
-      'li' => method(:process_xml_tag_li),
-      'p' => method(:process_xml_tag_p)
-    }
+
 
   # Dato un oggetto rappresentante il tag b html, processa ricorsivamente i suoi
   # figli cosi' da ottenere le action da applicare per la creazione del pdf
@@ -80,4 +72,14 @@ module PdfWritingToolsProcess
       [] # Non previsto
     end
   end
+
+  @process_xml_tag_table =
+  {
+    'text' => method(:process_xml_text),
+    'b' => method(:process_xml_tag_b),
+    'i' => method(:process_xml_tag_i),
+    'ul' => method(:process_xml_tag_ul),
+    'li' => method(:process_xml_tag_li),
+    'p' => method(:process_xml_tag_p)
+  }
 end
