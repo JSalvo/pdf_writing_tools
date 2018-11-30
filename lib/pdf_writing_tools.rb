@@ -36,7 +36,7 @@ module PdfWritingTools
   def self.process_xml_tag_b(xml_obj, properties)
     actions_list = []
     xml_obj.children.each do |child|
-      actions_list += process_xml_obj(child, properties + [:bold])
+      actions_list += self.process_xml_obj(child, properties + [:bold])
     end
     actions_list
   end
@@ -46,7 +46,7 @@ module PdfWritingTools
   def self.process_xml_tag_i(xml_obj, properties)
     actions_list = []
     xml_obj.children.each do |child|
-      actions_list += process_xml_obj(child, properties + [:italic])
+      actions_list += self.process_xml_obj(child, properties + [:italic])
     end
     actions_list
   end
@@ -63,7 +63,7 @@ module PdfWritingTools
   def self.process_xml_tag_ul(xml_obj, properties)
     actions_list = []
     xml_obj.children.each do |child|
-      actions_list += process_xml_obj(child, properties)
+      actions_list += self.process_xml_obj(child, properties)
     end
     actions_list
   end
@@ -73,9 +73,9 @@ module PdfWritingTools
   def self.process_xml_tag_li(xml_obj, _properties)
     actions_list = []
     xml_obj.children.each do |child|
-      actions_list += process_xml_obj(child, [])
+      actions_list += self.process_xml_obj(child, [])
     end
-    new_line_action + bullet_action + indent_action(4) + actions_list
+    new_line_action + bullet_action + self.indent_action(4) + actions_list
   end
 
   # Produce le "actions" che permettono di disegnare nel PDF, il contenuto
@@ -83,7 +83,7 @@ module PdfWritingTools
   def self.process_xml_tag_p(xml_obj, properties)
     actions_list = []
     xml_obj.children.each do |child|
-      actions_list += process_xml_obj(child, properties)
+      actions_list += self.process_xml_obj(child, properties)
     end
     new_line_action + actions_list
   end
@@ -107,7 +107,7 @@ module PdfWritingTools
     actions_list = []
     if xml_object.name == 'nothtml'
       xml_object.children.each do |child|
-        actions_list += process_xml_obj(child, [])
+        actions_list += self.process_xml_obj(child, [])
       end
     end
     actions_list
@@ -117,10 +117,10 @@ module PdfWritingTools
   def self.draw_xml_object(pdf, xml_object)
     # Ottengo una lista di azioni, ciascuna delle quali, quando eseguita,
     # permette di disegnare una parte del documento xml all'interno del pdf
-    actions_list = get_actions_list(xml_object)
+    actions_list = self.get_actions_list(xml_object)
 
     # "Eseguo" le azioni contenute nella lista
-    execute_actions(pdf, actions_list, nil, [])
+    self.execute_actions(pdf, actions_list, nil, [])
   end
 
   # Esegue last_action, oppure concatena i dati di action e di last_action
@@ -130,7 +130,7 @@ module PdfWritingTools
     elsif last_action_name == :draw_formatted_text
       data += action[:data]
     else
-      execute_action(pdf, last_action_name, data)
+      self.execute_action(pdf, last_action_name, data)
       data = action[:data]
     end
     [:draw_formatted_text, data]
@@ -163,12 +163,12 @@ module PdfWritingTools
   def self.execute_actions(pdf, actions, last_actn_name, data)
     actions.each do |action|
       if action[:action_name] == :draw_formatted_text
-        last_actn_name, data = text_action(pdf, action, last_actn_name, data)
+        last_actn_name, data = self.text_action(pdf, action, last_actn_name, data)
       elsif action[:action_name] == :draw_image
-        last_actn_name, data = img_action(pdf, action, last_actn_name, data)
+        last_actn_name, data = self.img_action(pdf, action, last_actn_name, data)
       end
     end
-    execute_action(pdf, last_actn_name, data)
+    self.execute_action(pdf, last_actn_name, data)
   end
 
   @process_xml_tag_table =
