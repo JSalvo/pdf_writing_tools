@@ -1,4 +1,4 @@
-require 'PdfWritingToolsActions'
+require 'pdf_writing_tools_actions'
 
 module PdfWritingToolsProcess
   @process_xml_tag_table =

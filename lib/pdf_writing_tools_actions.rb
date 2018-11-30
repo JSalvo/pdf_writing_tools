@@ -1,4 +1,4 @@
-require "PdfWritingToolsProcess"
+require "pdf_writing_tools_process"
 
 
 module PdfWritingToolsActions
