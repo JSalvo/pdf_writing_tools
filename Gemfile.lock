@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pdf_writing_tools (0.0.3.1)
+    pdf_writing_tools (0.0.4)
       rails (~> 4.2.8)
 
 GEM
