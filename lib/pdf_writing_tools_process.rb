@@ -1,8 +1,6 @@
 require 'pdf_writing_tools_actions'
 
 module PdfWritingToolsProcess
-
-
   # Dato un oggetto rappresentante il tag b html, processa ricorsivamente i suoi
   # figli cosi' da ottenere le action da applicare per la creazione del pdf
   def self.process_xml_tag_b(xml_obj, properties)

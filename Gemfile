@@ -13,5 +13,5 @@ gemspec
 # To use debugger
 # gem 'debugger'
 
+gem 'rails', '~> 4.2.0'
 
-gem 'rails', '4.2.8'

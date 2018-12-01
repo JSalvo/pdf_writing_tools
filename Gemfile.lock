@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pdf_writing_tools (0.0.4)
+    pdf_writing_tools (0.0.5)
       rails (~> 4.2.8)
 
 GEM
@@ -106,7 +106,7 @@ PLATFORMS
 
 DEPENDENCIES
   pdf_writing_tools!
-  rails (= 4.2.8)
+  rails (~> 4.2.0)
   sqlite3
 
 BUNDLED WITH

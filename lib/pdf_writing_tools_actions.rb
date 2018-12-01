@@ -1,18 +1,5 @@
-require "pdf_writing_tools_process"
-
-
 module PdfWritingToolsActions
-  # Produce le actions necessarie per disegnare nel PDF l'intero documento
-  # XML
-  def self.get_actions_list(xml_object)
-    actions_list = []
-    if xml_object.name == 'nothtml'
-      xml_object.children.each do |child|
-        actions_list += PdfWritingToolsProcess.process_xml_obj(child, [])
-      end
-    end
-    actions_list
-  end
+
 
   # Questa action contiene istruzioni per disegnare un "a capo" nel PDF
   def self.new_line_action
