@@ -33,19 +33,40 @@ module PdfWritingToolsProcess
   def self.process_xml_tag_ul(xml_obj, properties)
     actions_list = []
     xml_obj.children.each do |child|
-      actions_list += process_xml_obj(child, properties)
+      if child.name == "li"
+        actions_list += process_xml_obj(child, properties)
+      end
+    end
+    actions_list
+  end
+
+  # Produce le "actions" che permettono di disegnare nel PDF, la lista contenuta
+  # nel tag ol
+  def self.process_xml_tag_ol(xml_obj, properties, idx_start='1')
+    actions_list = []
+    idx = idx_start
+    xml_obj.children.each do |child|
+      if child.name == "li"
+        actions_list += process_xml_obj(child, properties, idx)
+        idx = idx.next
+      end
     end
     actions_list
   end
 
   # Produce le "actions" che permettono di disengare nel PDF, l'elemento della
   # lista indicato da li
-  def self.process_xml_tag_li(xml_obj, _properties)
+  def self.process_xml_tag_li(xml_obj, _properties, idx=nil)
     actions_list = []
     xml_obj.children.each do |child|
       actions_list += process_xml_obj(child, [])
     end
-    PdfWritingToolsActions.new_line_action + PdfWritingToolsActions.bullet_action + PdfWritingToolsActions.indent_action(4) + actions_list
+    
+    if idx
+      PdfWritingToolsActions.new_line_action + PdfWritingToolsActions.atomic_text_action(idx) + PdfWritingToolsActions.indent_action(4) + actions_list
+    else 
+      PdfWritingToolsActions.new_line_action + PdfWritingToolsActions.bullet_action + PdfWritingToolsActions.indent_action(4) + actions_list
+    end
   end
 
   # Produce le "actions" che permettono di disegnare nel PDF, il contenuto
@@ -59,8 +80,8 @@ module PdfWritingToolsProcess
   end
 
   def self.process_xml_tag_h1(xml_obj, properties)
-    actions_list = process_xml_text(xml_obj.child, [:bold], 18, upcase=true)
-    actions_list + PdfWritingToolsActions.new_line_action  
+    actions_list = process_xml_text(xml_obj.child, [:bold], 16, true)
+    PdfWritingToolsActions.new_line_action + actions_list + PdfWritingToolsActions.new_line_action * 2  
   end
 
   # Produce le actions necessarie per disegnare nel PDF un determinato

@@ -4,6 +4,10 @@ module PdfWritingToolsActions
     [{ action_name: :draw_formatted_text, data: [{ text: "\n" }] }]
   end
 
+  def self.atomic_text_action(atomic_text)
+    [{ action_name: :draw_formatted_text, data: [{ text: atomic_text }] }]
+  end
+
   # Questa action, contiene istruzioni per disegnare nel pdf
   # indent_spaces spazi, in modo da creare degli extra spazi,
   # utili per i rientri
