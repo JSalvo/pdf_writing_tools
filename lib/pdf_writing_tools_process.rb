@@ -88,7 +88,7 @@ module PdfWritingToolsProcess
   # "tag"
   def self.process_xml_obj(xml_obj, properties)
     case xml_obj.name
-    when 'text', 'b', 'i', 'ul', 'li', 'p', 'h1'
+    when 'text', 'b', 'i', 'ul', 'li', 'p', 'h1', 'ol'
       @process_xml_tag_table[xml_obj.name].call(xml_obj, properties)
     when 'br'
       PdfWritingToolsActions.new_line_action
@@ -103,6 +103,7 @@ module PdfWritingToolsProcess
     'b' => method(:process_xml_tag_b),
     'i' => method(:process_xml_tag_i),
     'ul' => method(:process_xml_tag_ul),
+    'ol' => method(:process_xml_tag_ol),
     'li' => method(:process_xml_tag_li),
     'p' => method(:process_xml_tag_p),
     'h1' => method(:process_xml_tag_h1)
