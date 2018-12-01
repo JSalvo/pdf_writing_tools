@@ -1,6 +1,4 @@
 module PdfWritingToolsActions
-
-
   # Questa action contiene istruzioni per disegnare un "a capo" nel PDF
   def self.new_line_action
     [{ action_name: :draw_formatted_text, data: [{ text: "\n" }] }]

@@ -23,8 +23,8 @@ module PdfWritingToolsProcess
 
   # Produce la "action" che permette di disegnare nel pdf, il testo con le
   # proprieta' specificate in proprerties
-  def self.process_xml_text(xml_obj, properties)
-    data = { text: xml_obj.text + ' ', styles: properties }
+  def self.process_xml_text(xml_obj, properties, size = 12)
+    data = { text: xml_obj.text + ' ', styles: properties, size: size }
     [{ action_name: :draw_formatted_text, data: [data] }]
   end
 
@@ -64,8 +64,10 @@ module PdfWritingToolsProcess
     case xml_obj.name
     when 'text', 'b', 'i', 'ul', 'li', 'p'
       @process_xml_tag_table[xml_obj.name].call(xml_obj, properties)
+    when 'h1'
+      @process_xml_tag_table['text'].call(xml_obj.child, [:bold], 16)
     when 'br'
-        PdfWritingToolsActions.new_line_action
+      PdfWritingToolsActions.new_line_action
     else
       [] # Non previsto
     end
