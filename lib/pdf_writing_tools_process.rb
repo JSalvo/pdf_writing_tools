@@ -23,8 +23,8 @@ module PdfWritingToolsProcess
 
   # Produce la "action" che permette di disegnare nel pdf, il testo con le
   # proprieta' specificate in proprerties
-  def self.process_xml_text(xml_obj, properties, size = 12)
-    data = { text: xml_obj.text + ' ', styles: properties, size: size }
+  def self.process_xml_text(xml_obj, properties, size = 12, upcase = false)
+    data = { text: (upcase ? xml_obj.text.upcase : xml_obj.text) + ' ', styles: properties, size: size }
     [{ action_name: :draw_formatted_text, data: [data] }]
   end
 
@@ -58,14 +58,17 @@ module PdfWritingToolsProcess
     PdfWritingToolsActions.new_line_action + actions_list
   end
 
+  def self.process_xml_tag_h1(xml_obj, properties)
+    actions_list = process_xml_text(xml_obj.child, [:bold], 18, upcase=true)
+    actions_list + PdfWritingToolsActions.new_line_action  
+  end
+
   # Produce le actions necessarie per disegnare nel PDF un determinato
   # "tag"
   def self.process_xml_obj(xml_obj, properties)
     case xml_obj.name
-    when 'text', 'b', 'i', 'ul', 'li', 'p'
+    when 'text', 'b', 'i', 'ul', 'li', 'p', 'h1'
       @process_xml_tag_table[xml_obj.name].call(xml_obj, properties)
-    when 'h1'
-      @process_xml_tag_table['text'].call(xml_obj.child, [:bold], 16)
     when 'br'
       PdfWritingToolsActions.new_line_action
     else
@@ -80,6 +83,7 @@ module PdfWritingToolsProcess
     'i' => method(:process_xml_tag_i),
     'ul' => method(:process_xml_tag_ul),
     'li' => method(:process_xml_tag_li),
-    'p' => method(:process_xml_tag_p)
+    'p' => method(:process_xml_tag_p),
+    'h1' => method(:process_xml_tag_h1)
   }
 end
