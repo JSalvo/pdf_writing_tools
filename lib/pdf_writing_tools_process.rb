@@ -47,7 +47,7 @@ module PdfWritingToolsProcess
     idx = idx_start
     xml_obj.children.each do |child|
       if child.name == "li"
-        actions_list += process_xml_obj(child, properties, idx)
+        actions_list += process_xml_tag_li(child, properties, idx)
         idx = idx.next
       end
     end
