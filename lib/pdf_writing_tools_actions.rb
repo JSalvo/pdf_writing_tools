@@ -22,14 +22,15 @@ module PdfWritingToolsActions
   end
 
   # Questa action, contiene istruzioni per disegnare un "bullet", ossia
-  # un oggetto grafico, tipo un segno di spunta accanto all'elemnto di
+  # un oggetto grafico, tipo un segno di spunta accanto all'elemento di
   # una lista
   def self.bullet_action
     [
       {
         action_name: :draw_image, data:
         {
-          url: 'public/bullet.png' # Pallino
+          url: File.expand_path("../../assets/bullet.png", __FILE__)
+          # Pallino
         }
       }
     ]
@@ -61,7 +62,7 @@ module PdfWritingToolsActions
   # Esegue un azione, andando a scrivere del testo nel PDF oppure un'immagine
   def self.execute_action(pdf, action_name, data)
     if action_name == :draw_formatted_text
-      pdf.formatted_text(data, align: :left)
+      pdf.formatted_text(data, align: :left)   #color: "ff0000")
     elsif action_name == :draw_image
       current_cursor_position = pdf.cursor
       pdf.move_cursor_to(current_cursor_position - 3)

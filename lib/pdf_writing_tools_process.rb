@@ -58,6 +58,7 @@ module PdfWritingToolsProcess
   # lista indicato da li
   def self.process_xml_tag_li(xml_obj, _properties, idx=nil)
     actions_list = []
+    
     xml_obj.children.each do |child|
       actions_list += process_xml_obj(child, [])
     end

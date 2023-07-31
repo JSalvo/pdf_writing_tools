@@ -1,0 +1,24 @@
+Un po' di documentazione alla rinfusa, da sistemare poi.
+
+Lo scopo di questa gem è quello di fornire una serie di funzioni, che sulla base di prawn, 
+permettano di generare un PDF. 
+
+Prawn è completo e funziona molto bene, ma a mio avviso è troppo complesso.
+
+Per semplificare la generazione di testo ho introdotto una funzione che partendo da un file
+xml che utilizza una sintassi simil html, genera un pdf.
+
+Per questo motivo, la gem, dipende anche da nokogiri.
+
+La sintassi simil html, utilizza un sottoinsieme dei tag html. 
+Per "sottolineare" che non si tratta di html, i tag che racchiudono il sottoinsieme devono
+essere:
+
+
+<nothtml>
+
+</nothtml>
+
+
+Se il documento xml, non contiene questi "delimitatori", il file xml viene di fatto ignorato.
+
